@@ -1,0 +1,46 @@
+[package]
+name = "hlw-device"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.88"
+license = "MIT"
+publish = false
+
+[lib]
+path = "native/lib.rs"
+crate-type = ["cdylib"]
+
+[dependencies]
+napi = { version = "3.14", default-features = false, features = ["napi8"] }
+napi-derive = "3"
+
+[target.'cfg(windows)'.dependencies]
+sha2 = "0.10"
+windows = { version = "0.62.2", features = [
+    "Win32_Foundation",
+    "Wdk_System_SystemServices",
+    "Win32_Graphics_Gdi",
+    "Win32_UI_Shell",
+    "Win32_UI_Shell_Common",
+    "Win32_System_IO",
+    "Win32_System_Ioctl",
+    "Win32_Security",
+    "Win32_System_SystemInformation",
+    "Win32_System_Registry",
+    "Win32_System_Power",
+    "Win32_System_Threading",
+    "Win32_NetworkManagement_IpHelper",
+    "Win32_NetworkManagement_Ndis",
+    "Win32_Networking_WinSock",
+    "Win32_Storage_FileSystem",
+    "Win32_Graphics_Dxgi",
+    "Win32_Graphics_Dxgi_Common",
+] }
+
+[build-dependencies]
+napi-build = "2"
+
+[profile.release]
+lto = true
+codegen-units = 1
+strip = "symbols"

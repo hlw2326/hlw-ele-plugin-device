@@ -1,0 +1,69 @@
+{
+    "name": "@hlw-ele/plugin-device",
+    "version": "0.1.0",
+    "description": "Windows 设备信息采集，Rust + Node-API",
+    "type": "module",
+    "main": "./dist/index.cjs",
+    "module": "./dist/index.mjs",
+    "types": "./dist/index.d.mts",
+    "exports": {
+        ".": {
+            "import": { "types": "./dist/index.d.mts", "default": "./dist/index.mjs" },
+            "require": { "types": "./dist/index.d.cts", "default": "./dist/index.cjs" }
+        },
+        "./main": {
+            "import": { "types": "./dist/main.d.mts", "default": "./dist/main.mjs" },
+            "require": { "types": "./dist/main.d.cts", "default": "./dist/main.cjs" }
+        },
+        "./preload": {
+            "import": { "types": "./dist/preload.d.mts", "default": "./dist/preload.mjs" },
+            "require": { "types": "./dist/preload.d.cts", "default": "./dist/preload.cjs" }
+        },
+        "./types": {
+            "types": "./dist/augment.d.mts"
+        }
+    },
+    "files": [
+        "dist",
+        "README.md"
+    ],
+    "sideEffects": false,
+    "os": ["win32"],
+    "cpu": ["x64"],
+    "engines": { "node": ">=20.19.0" },
+    "scripts": {
+        "build:native": "node scripts/native.mjs",
+        "build:js": "tsdown",
+        "build": "pnpm build:native && tsdown",
+        "typecheck": "tsc --noEmit",
+        "lint": "eslint .",
+        "format": "eslint --fix .",
+        "test": "pnpm build && cargo test --lib && node --test tests/*.test.mjs",
+        "test:pack": "pnpm pack --pack-destination target && node scripts/pack.mjs",
+        "bench": "node scripts/bench.mjs",
+        "prepack": "pnpm build"
+    },
+    "napi": {
+        "binaryName": "device",
+        "targets": ["x86_64-pc-windows-msvc"]
+    },
+    "peerDependencies": {
+        "electron": "39.8.10"
+    },
+    "peerDependenciesMeta": {
+        "electron": { "optional": true }
+    },
+    "devDependencies": {
+        "@electron-toolkit/eslint-config-ts": "^4.0.0",
+        "@hlw-ele/types": "file:../hlw-ele-types",
+        "@napi-rs/cli": "^3.10.8",
+        "@stylistic/eslint-plugin": "^5.10.0",
+        "@types/node": "^24.19.2",
+        "electron": "39.8.10",
+        "eslint": "^10.13.0",
+        "tsdown": "^0.23.1",
+        "typescript": "^5.9.3"
+    },
+    "license": "MIT",
+    "packageManager": "pnpm@9.15.9"
+}

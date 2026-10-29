@@ -60,6 +60,7 @@
         "electron": { "optional": true }
     },
     "devDependencies": {
+        "@hlw-ele/core": "file:../hlw-ele-core",
         "@electron-toolkit/eslint-config-ts": "^4.0.0",
         "@hlw-ele/types": "file:../hlw-ele-types",
         "@napi-rs/cli": "^3.10.8",

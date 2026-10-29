@@ -14,8 +14,10 @@ const info: DeviceInfo = device.info()
 
 ```ts
 // 宿主 main
-import { initDevice } from '@hlw-ele/plugin-device/main'
-initDevice()
+import { device } from '@hlw-ele/plugin-device/main'
+import { registerProviders } from '@hlw-ele/core'
+
+await registerProviders([device])
 
 // 宿主 preload
 import { init } from '@hlw-ele/core/preload'

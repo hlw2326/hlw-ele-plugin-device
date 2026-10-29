@@ -1,12 +1,16 @@
-import { ipcMain } from 'electron'
-import { device } from './index'
+import type { Provider } from '@hlw-ele/core'
+import { device as api } from './index'
 import { IPC } from './constants'
 
 /**
- * 初始化设备：注册 hlw:device:*
+ * 设备插件：注册 hlw:device:info（同步通道）
  */
-export function initDevice(): void {
-    ipcMain.on(IPC.info, (event) => {
-        event.returnValue = device.info()
-    })
+export const device: Provider = {
+    name: 'device',
+    optional: true,
+    setup(kernel) {
+        kernel.handleSync(IPC.info, () => {
+            return api.info()
+        })
+    }
 }
